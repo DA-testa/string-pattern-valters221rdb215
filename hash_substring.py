@@ -20,11 +20,15 @@ def read_input():
     return pattern, text
 
 
+
+
 def print_occurrences(output):
     # this function should control output, it doesn't need any return
     print(' '.join(map(str, output)))
     
      
+        
+        
 def get_occurrences(pattern, text):
     pattern_len = len(pattern)
     text_len = len(text)
@@ -40,6 +44,8 @@ def get_occurrences(pattern, text):
             text_hash += ord(text[i+pattern_len-1])
 
     return list(get_occurrences(pattern, text))
+
+
 
 if __name__ == '__main__':
     print_occurrences(get_occurrences(*read_input()))
