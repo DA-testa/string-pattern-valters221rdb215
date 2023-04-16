@@ -13,7 +13,7 @@ def read_input():
                 pattern = f.readline().strip()
                 text = f.readline().strip()
         except FileNotFoundError:
-            print("File not found.")
+            print("File doesnt exist")
             exit()
 
     return pattern, text
@@ -23,6 +23,7 @@ def print_occurrences(output):
 
     print(' '.join(map(str, output)))
 
+     
 
 def get_occurrences(pattern, text):
     pattern_len = len(pattern)
@@ -38,5 +39,7 @@ def get_occurrences(pattern, text):
             text_hash -= ord(text[i])
             text_hash += ord(text[i+pattern_len])
 
+            
+        
 if __name__ == '__main__':
     print_occurrences(get_occurrences(*read_input()))
