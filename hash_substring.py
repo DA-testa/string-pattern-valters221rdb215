@@ -41,7 +41,8 @@ def get_occurrences(pattern, text):
 
         if i < text_len - pattern_len + 1:
             text_hash -= ord(text[i-1])
-            text_hash += ord(text[i+pattern_len-1])
+            text_hash += ord(text[i+pattern_len-1]))
+
 
     return list(get_occurrences(pattern, text))
 
