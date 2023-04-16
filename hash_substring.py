@@ -1,55 +1,42 @@
 # python3
 
 def read_input():
-    # this function needs to acquire input both from keyboard and file
-    # as before, use capital i (input from keyboard) and capital f (input from file) to choose which input type will follow
+    mode = input().strip()
 
-    # after input type choice
-    # read two lines
-    # first line is pattern
-    # second line is text in which to look for pattern
-
-    # return both lines in one return
-
-    # this is the sample return, notice the rstrip function
-    return (input().rstrip(), input().rstrip())
+    if mode == "I":
+        pattern = input().strip()
+        text = input().strip()
+    elif mode == "F":
+        with open("./tests/06") as f:
+            pattern = f.readline().strip()
+            text = f.readline().strip()
+    else:
+        raise ValueError("Invalid input mode")
+    
+    return pattern, text
 
 
 def print_occurrences(output):
-    # this function should control output, it doesn't need any return
-    print(' '.join(map(str, output)))
-
+    for i in output:
+        print(i, end=' ')
+    print()
 
 def get_occurrences(pattern, text):
-    p = 10**9+7
-    x = 31
+    pattern_len = len(pattern)
+    text_len = len(text)
+    pattern_hash = sum(ord(pattern[i]) * pow(10, pattern_len - i - 1) for i in range(pattern_len))
+    text_hash = sum(ord(text[i]) * pow(10, pattern_len - i - 1) for i in range(pattern_len))
     occurrences = []
-    p_hash = 0
-    t_hash = 0
-    x_power = 1
 
-    for i in range(len(pattern)):
-        p_hash = (p_hash*x + ord(pattern[i])) % p
-        x_power = (x_power*x) % p
-
-    for i in range(len(pattern)):
-        t_hash = (t_hash*x + ord(text[i])) % p
-        x_power = (x_power*x) % p
-
-    for i in range(len(text)-len(pattern)+1):
-        if p_hash == t_hash:
-            if text[i:i+len(pattern)] == pattern:
-                occurrences.append(i)
-                
-        if i+len(pattern) < len(text):
-            t_hash = (t_hash - ord(text[i])*x_power) % p
-            t_hash = (t_hash*x + ord(text[i+len(pattern)])) % p
-            if t_hash < 0:
-                t_hash += p
+    for i in range(text_len - pattern_len + 1):
+        if pattern_hash == text_hash and pattern == text[i:i+pattern_len]:
+            occurrences.append(i)
+        if i < text_len - pattern_len:
+            text_hash = text_hash - ord(text[i]) * pow(10, pattern_len - 1)
+            text_hash = text_hash * 10 + ord(text[i + pattern_len])
 
     return occurrences
 
 
-# this part launches the functions
 if __name__ == '__main__':
     print_occurrences(get_occurrences(*read_input()))
