@@ -26,18 +26,18 @@ def print_occurrences(output):
      
 
 def get_occurrences(pattern, text):
-    pattern_len = len(pattern)
-    text_len = len(text)
-    pattern_hash = sum([ord(c) for c in pattern])
-    text_hash = sum([ord(c) for c in text[:pattern_len]])
+    patternLength = len(pattern)
+    textLength = len(text)
+    patternHash= sum([ord(c) for c in pattern])
+    textHash = sum([ord(c) for c in text[:patternLength])
 
-    for i in range(0, text_len - pattern_len + 1):
-        if pattern_hash == text_hash and pattern == text[i:i+pattern_len]:
+    for i in range(0, textLength - patternLength + 1):
+        if patternHash == textHash and pattern == text[i:i+patternLength]:
             yield i
 
-        if i < text_len - pattern_len:
-            text_hash -= ord(text[i])
-            text_hash += ord(text[i+pattern_len])
+        if i < textLength - patternLength:
+            textHash -= ord(text[i])
+            textHash += ord(text[i+patternLength])
 
             
         
